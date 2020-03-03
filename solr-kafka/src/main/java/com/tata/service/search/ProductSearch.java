@@ -27,6 +27,7 @@ public class ProductSearch {
 		// machine so using Solr client instead of solrCloud
 		String solrUrl = "http://localhost:8983"; // Adding default solrUrl
 		String commerceCollection = "commerce_products_catalog";
+		String requestHandler ="select/"; // default request handler ; will be replaced later with properties file
 		byte[] data = null;
 		SolrDocumentList results = null;
 		List<Product> products = new ArrayList<Product>();
@@ -41,6 +42,7 @@ public class ProductSearch {
 
 			solrUrl = prop.getProperty("solrUrl");
 			commerceCollection = prop.getProperty("commerceProductCollection");
+			requestHandler = prop.getProperty("requestHandler");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -49,9 +51,12 @@ public class ProductSearch {
 		// Creating Solr client for searching
 		SolrClient client = new HttpSolrClient.Builder(solrUrl + "/" + commerceCollection).build();
 		SolrQuery query = GenerateSolrQuery.generateSolrQuery(searchQuery);
+		query.setRequestHandler(requestHandler);
+		
 
 		try {
 			QueryResponse response = client.query(query);
+			
 
 			for (int i = 0; i < response.getResults().size(); i++) {
 				
