@@ -28,7 +28,7 @@ public class CommerceCatalogIndex {
 		String commerceCollection = "commerce_products_catalog";
 		
 		//if required some Pre-process of query
-		try (InputStream configurationProperties = new FileInputStream("/Users/nmathpa/Desktop/solr-kafka/src/main/resources/application.properties")) {
+		try (InputStream configurationProperties = new FileInputStream("../../../../../resources/application.properties")) {
 
             Properties prop = new Properties();
             prop.load(configurationProperties);
